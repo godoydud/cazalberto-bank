@@ -37,19 +37,16 @@ while True:
     # Converta a mensagem recebida para uma string e imprima
     print("Mensagem recebida:", data.decode())
     mensagem_recebida = json.loads(data.decode())
-    
+    commit = ""
     try:
         if mensagem_recebida["tipo_mensagem"] == "operacao":
             print("OPERACAO RECEBIDA:", mensagem_recebida)
-            if mensagem_recebida["detalhes"]["tipo"] == "C":
-                enviar_mensagem_credito()
-            elif mensagem_recebida["detalhes"]["tipo"] == "D":
-                enviar_mensagem_debito()
         elif mensagem_recebida["tipo_mensagem"] == "commit":
             print("COMMIT RECEBIDO:", mensagem_recebida)
+            commit = mensagem_recebida
     except:
         print("mensagem inválida recebida")
         server_socket.sendto("mensagem inválida".encode(), address)
     
     # Envie uma resposta de volta para o cliente
-    server_socket.sendto("Resposta do servidor".encode(), address)
+    server_socket.sendto("mensagem recebida".encode(), address)
