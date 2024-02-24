@@ -15,6 +15,7 @@ services:
     build: 
       context: ./coordenador
       dockerfile: Dockerfile
+      
     networks:
       - mynetwork
     
