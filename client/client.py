@@ -28,7 +28,7 @@ conta_cliente = ''.join(random.choices(string.digits, k=9))
 tipo = random.choice(['C', 'D'])  
 valor_operacao = round(random.uniform(0.01, 1000.0), 2)
 
-message = OpClient(data_operacao, conta_cliente, tipo, valor_operacao)
+message = OpClient(tipo_mensagem, data_operacao, conta_cliente, tipo, valor_operacao)
 
 print("operacao a ser enviada", message)
 # Envia a mensagem ao servidor
