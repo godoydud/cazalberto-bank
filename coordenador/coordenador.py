@@ -41,6 +41,10 @@ while True:
     try:
         if mensagem_recebida["tipo_mensagem"] == "operacao":
             print("OPERACAO RECEBIDA:", mensagem_recebida)
+            if mensagem_recebida["detalhes"]["tipo"] == "C":
+                enviar_mensagem_credito()
+            elif mensagem_recebida["detalhes"]["tipo"] == "D":
+                enviar_mensagem_debito()
         elif mensagem_recebida["tipo_mensagem"] == "commit":
             print("COMMIT RECEBIDO:", mensagem_recebida)
     except:
