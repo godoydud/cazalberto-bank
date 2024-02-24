@@ -1,5 +1,17 @@
 import socket
 
+
+import json
+
+def OpClient(data_operacao, conta_cliente, tipo, valor_operacao):
+    op_data = {
+        "data_operacao": data_operacao,
+        "conta_cliente": conta_cliente,
+        "tipo": tipo,
+        "valor_operacao": valor_operacao
+    }
+    return json.dumps(op_data)
+
 # Endereço IP e porta do servidor UDP
 server_ip = 'coordenador'
 server_port = 5000
