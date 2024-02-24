@@ -1,7 +1,7 @@
 import socket
-
-
 import json
+import random
+import string
 
 def OpClient(data_operacao, conta_cliente, tipo, valor_operacao):
     op_data = {
@@ -19,8 +19,12 @@ server_port = 5000
 # Cria um socket UDP
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-# Mensagem a ser enviada ao servidor
-message = 'Olá, servidor!'
+data_operacao = '2024-02-24'
+conta_cliente = ''.join(random.choices(string.digits, k=9))
+tipo = random.choice(['C', 'D'])  
+valor_operacao = round(random.uniform(0.01, 1000.0), 2)
+
+message = OpClient(data_operacao, conta_cliente, tipo, valor_operacao)
 
 # Envia a mensagem ao servidor
 client_socket.sendto(message.encode(), (server_ip, server_port))
