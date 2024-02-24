@@ -2,17 +2,17 @@ import socket
 
 HOST = '0.0.0.0'
 PORT = 5000
-BUFFER_SIZE = 50
+BUFFER_SIZE = 1024  
 
-def main():
-    # create a socket UDP to listen and print all message received
-    print("Hello from coordenador")
-    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
-        s.bind((HOST, PORT))
-        while True:
-            data, addr = s.recvfrom(BUFFER_SIZE)
-            print(f"Received {data.decode()} from {addr}")
+# create a socket UDP to wait listen all clients in the network
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+server_socket.bind((HOST, PORT))
 
-if __name__ == "__main__":
-    main()
-    
+print('Servidor UDP esperando conexão na porta', PORT)
+
+while True:
+    message, client_address = server_socket.recvfrom(BUFFER_SIZE)
+    print('Mensagem recebida do cliente', client_address, ':', message.decode())
+    server_socket.sendto('Olá, cliente!'.encode(), client_address)
+    print('Resposta enviada ao cliente', client_address)
+
