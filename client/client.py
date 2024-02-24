@@ -3,12 +3,15 @@ import json
 import random
 import string
 
-def OpClient(data_operacao, conta_cliente, tipo, valor_operacao):
+def OpClient(tipo_mensagem, data_operacao, conta_cliente, tipo, valor_operacao):
     op_data = {
-        "data_operacao": data_operacao,
-        "conta_cliente": conta_cliente,
-        "tipo": tipo,
-        "valor_operacao": valor_operacao
+        "tipo_mensagem": tipo_mensagem,
+        "detalhes": {
+            "data_operacao": data_operacao,
+            "conta_cliente": conta_cliente,
+            "tipo": tipo,
+            "valor_operacao": valor_operacao
+        }
     }
     return json.dumps(op_data)
 
@@ -19,6 +22,7 @@ server_port = 5000
 # Cria um socket UDP
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
+tipo_mensagem = 'operacao'
 data_operacao = '2024-02-24'
 conta_cliente = ''.join(random.choices(string.digits, k=9))
 tipo = random.choice(['C', 'D'])  
@@ -33,6 +37,7 @@ client_socket.sendto(message.encode(), (server_ip, server_port))
 response, server_address = client_socket.recvfrom(1024)
 
 # Exibe a resposta do servidor
+print('Mensagem enviada ao servidor:', message)
 print('Resposta do servidor:', response.decode())
 
 # Fecha o socket
