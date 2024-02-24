@@ -18,7 +18,6 @@ while True:
     message, client_address = server_socket.recvfrom(BUFFER_SIZE)
     print('Mensagem recebida do cliente',
           client_address, ':', message.decode())
-    server_socket.sendto('Olá, debito!'.encode(), client_address)
 
     mensagem = {
         "tipo_mensagem": "commit",
