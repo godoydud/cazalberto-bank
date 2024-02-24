@@ -18,4 +18,11 @@ while True:
     print('Mensagem recebida do cliente',
           client_address, ':', message.decode())
     server_socket.sendto('Olá, debito!'.encode(), client_address)
-    print('Resposta enviada ao cliente', client_address)
+
+    mensagem = {
+        "tipo_mensagem": "commit",
+        "detalhes": {
+            "mensagem": "OK",
+        }
+    }
+    server_socket.sendto(json.dumps(mensagem).encode(), client_address)
