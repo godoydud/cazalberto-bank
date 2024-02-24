@@ -1,18 +1,22 @@
 import socket
 
-HOST = '0.0.0.0'
+# Defina a porta e o tamanho do buffer
 PORT = 5000
-BUFFER_SIZE = 1024  
+BUFFER_SIZE = 1024
+HOST = "0.0.0.0"
 
-# create a socket UDP to wait listen all clients in the network
+# Crie um socket UDP
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+# Associe o socket ao endereço e à porta
 server_socket.bind((HOST, PORT))
 
-print('Servidor UDP esperando conexão na porta', PORT)
+print("Servidor UDP esperando conexão na porta", PORT)
 
 while True:
-    message, client_address = server_socket.recvfrom(BUFFER_SIZE)
-    print('Mensagem recebida do cliente', client_address, ':', message.decode())
-    server_socket.sendto('Olá, cliente!'.encode(), client_address)
-    print('Resposta enviada ao cliente', client_address)
+    data, address = server_socket.recvfrom(BUFFER_SIZE)
 
+    # Converta a mensagem recebida para uma string e imprima
+    print("Mensagem recebida:", data.decode())
+    # Envie uma resposta de volta para o cliente
+    server_socket.sendto("Resposta do servidor".encode(), address)
