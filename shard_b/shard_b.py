@@ -3,7 +3,7 @@ import json
 
 HOST = '0.0.0.0'
 PORT = 7000
-BUFFER_SIZE = 1024
+BUFFER_SIZE = 4096
 
 # create a socket UDP to wait listen all clients in the network
 
@@ -26,4 +26,4 @@ while True:
             "mensagem": "OK",
         }
     }
-    server_socket.sendto(json.dumps(mensagem).encode(), client_address)
+    server_socket.sendto(str(json.dumps(mensagem)).encode(), client_address)

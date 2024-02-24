@@ -11,7 +11,7 @@ services:
     volumes:
       - ./client:/client
     deploy:
-      replicas: 3
+      replicas: 1
 
   coordenador:
     build: 

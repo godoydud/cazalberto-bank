@@ -3,7 +3,7 @@ import json
 
 HOST = '0.0.0.0'
 PORT = 6000
-BUFFER_SIZE = 1024
+BUFFER_SIZE = 4096
 
 # create a socket UDP to wait listen all clients in the network
 print("shard_a recebendo operações de crédito instanciado")
@@ -17,7 +17,6 @@ while True:
     message, client_address = server_socket.recvfrom(BUFFER_SIZE)
     print('Mensagem recebida do cliente',
           client_address, ':', message.decode())
-    server_socket.sendto('Olá, credito!'.encode(), client_address)
 
     mensagem = {
         "tipo_mensagem": "commit",
@@ -25,4 +24,4 @@ while True:
             "mensagem": "OK",
         }
     }
-    server_socket.sendto(json.dumps(mensagem).encode(), client_address)
+    server_socket.sendto(str(json.dumps(mensagem)).encode(), client_address)

@@ -14,16 +14,16 @@ server_socket.bind((HOST, PORT))
 
 # enviar mensagem de operações de debito ao shard_a na porta 6000
 def enviar_mensagem_debito():
-    shard_a_ip = 'shard_a'
-    shard_a_port = 6000
+    shard_a_ip = 'shard_b'
+    shard_a_port = 7000
     message = "operacao de debito"
     server_socket.sendto(message.encode(), (shard_a_ip, shard_a_port))
     print("mensagem de debito enviada")
 
 # enviar mensagem de operações de credito ao shard_b na porta 7000
 def enviar_mensagem_credito():
-    shard_b_ip = 'shard_b'
-    shard_b_port = 7000
+    shard_b_ip = 'shard_a'
+    shard_b_port = 6000
     message = "operacao de credito"
     server_socket.sendto(message.encode(), (shard_b_ip, shard_b_port))
     print("mensagem de credito enviada")
@@ -40,13 +40,18 @@ while True:
     commit = ""
     try:
         if mensagem_recebida["tipo_mensagem"] == "operacao":
+            if mensagem_recebida["detalhes"]["tipo"] == "C":
+                enviar_mensagem_credito()
+                server_socket.sendto("mensagem de credito processada".encode(), address)
+            elif mensagem_recebida["detalhes"]["tipo"] == "D":
+                enviar_mensagem_debito()
+                server_socket.sendto("mensagem de debito processada".encode(), address)
             print("OPERACAO RECEBIDA:", mensagem_recebida)
         elif mensagem_recebida["tipo_mensagem"] == "commit":
             print("COMMIT RECEBIDO:", mensagem_recebida)
             commit = mensagem_recebida
     except:
         print("mensagem inválida recebida")
-        server_socket.sendto("mensagem inválida".encode(), address)
+        pass
     
     # Envie uma resposta de volta para o cliente
-    server_socket.sendto("mensagem recebida".encode(), address)
