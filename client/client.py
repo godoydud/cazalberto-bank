@@ -26,11 +26,12 @@ valor_operacao = round(random.uniform(0.01, 1000.0), 2)
 
 message = OpClient(data_operacao, conta_cliente, tipo, valor_operacao)
 
+print("operacao a ser enviada", message)
 # Envia a mensagem ao servidor
 client_socket.sendto(message.encode(), (server_ip, server_port))
 
 # Recebe a resposta do servidor
-response, server_address = client_socket.recvfrom(1024)
+response, server_address = client_socket.recvfrom(4096)
 
 # Exibe a resposta do servidor
 print('Resposta do servidor:', response.decode())
