@@ -8,6 +8,8 @@ services:
       - mynetwork
     depends_on:
       - coordenador
+    volumes:
+      - ./client:/client
     deploy:
       replicas: 3
 
@@ -15,7 +17,9 @@ services:
     build: 
       context: ./coordenador
       dockerfile: Dockerfile
-      
+    
+    volumes:
+      - ./coordenador:/coordenador
     networks:
       - mynetwork
     
@@ -23,6 +27,8 @@ services:
     build:
       context: ./shard_a
       dockerfile: Dockerfile
+    volumes:
+      - ./shard_a:/shard_a
     networks:
       - mynetwork
     depends_on:
@@ -32,6 +38,8 @@ services:
     build:
       context: ./shard_b
       dockerfile: Dockerfile
+    volumes:
+      - ./shard_b:/shard_b
     networks:
       - mynetwork
     depends_on:
