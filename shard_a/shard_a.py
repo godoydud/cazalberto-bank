@@ -5,7 +5,6 @@ HOST = '0.0.0.0'
 PORT = 6000
 BUFFER_SIZE = 4096
 
-# create a socket UDP to wait listen all clients in the network
 print("shard_a recebendo operações de crédito instanciado")
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

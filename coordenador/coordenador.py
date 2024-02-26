@@ -2,22 +2,22 @@ import socket
 import json
 import queue
 
-# Defina a porta e o tamanho do buffer
+# Definição da porta e o tamanho do buffer
 PORT = 5000
 BUFFER_SIZE = 1024
 HOST = "0.0.0.0"
 
-# Crie um socket UDP
+# Criação do socket UDP
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-# Associe o socket ao endereço e à porta
+# Associa o socket ao endereço e à porta
 server_socket.bind((HOST, PORT))
 
-# fila de mensagens
+# Instancia fila de mensagem
 fila_de_mensagens = queue.Queue()
 
 
-# enviar mensagem de operações de debito ao shard_a na porta 6000
+# Envia mensagem de operações de debito ao shard_a na porta 6000
 def enviar_mensagem_debito(message):
     shard_a_ip = 'shard_b'
     shard_a_port = 7000
@@ -25,9 +25,7 @@ def enviar_mensagem_debito(message):
     server_socket.sendto(message.encode(), (shard_a_ip, shard_a_port))
     print("mensagem de debito enviada")
 
-# enviar mensagem de operações de credito ao shard_b na porta 7000
-
-
+# Envia mensagem de operações de credito ao shard_b na porta 7000
 def enviar_mensagem_credito(message):
     shard_b_ip = 'shard_a'
     shard_b_port = 6000
@@ -75,7 +73,7 @@ def processar_mensagem(mensagem):
 while True:
     data, address = server_socket.recvfrom(BUFFER_SIZE)
 
-    # Converta a mensagem recebida para uma string e imprima
+    # Converte a mensagem recebida para uma string e imprime
     print("Mensagem recebida:", data.decode())
     mensagem_recebida = json.loads(data.decode())
 
